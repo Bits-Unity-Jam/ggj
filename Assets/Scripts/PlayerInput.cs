@@ -15,6 +15,11 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
+        SetPlayerMoverDiraction();
+    }
+
+    private void SetPlayerMoverDiraction()
+    {
         if (Input.GetKey(KeyCode.W))
         {
             _playerMover.currentDirection = Directions.up;

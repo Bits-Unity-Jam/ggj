@@ -11,17 +11,15 @@ public class PlayerMover : MonoBehaviour
 { 
     [SerializeField] private PathCreator _currentPathCreator;
     [SerializeField] private float _speed;
-    
+
     private float _distanceTravelled;
 
     public Directions currentDirection { get; set; }
-    /*public GameObject[] allAvailableleRoute { get; private set; }*/
-
     
 
     private void Update()
     {
-        MoveByRout();
+        if(_currentPathCreator!=null)MoveByRout();
     }
     
 
@@ -38,7 +36,7 @@ public class PlayerMover : MonoBehaviour
         _distanceTravelled = 0;
     }
 
-    public PathCreator ChooseRoute(List<Route> routes) //шукає дорогу яка співпадає з напрямком руху гравця, якщо нема то та яка прямо
+    public PathCreator ChooseRoute(List<Route> routes) //шукає дорогу яка співпадає з напрямком руху гравця, якщо нема то рандом
     {
         Route routeStruct;
         if (routes.Where(i=>i.directions==currentDirection).Count()!=0)
@@ -49,13 +47,6 @@ public class PlayerMover : MonoBehaviour
         {
             routeStruct = routes[Random.Range(0,routes.Count)];
         }
-        //allAvailableleRoute[0] = routeStruct.route.GetComponent<PathCreator>();//тре поміняти
         return routeStruct.route.GetComponent<PathCreator>();
     }
-}
-public enum Directions
-{
-    up,
-    forward,
-    down,
 }
