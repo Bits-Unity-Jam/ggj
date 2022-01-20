@@ -6,27 +6,50 @@ using Random = UnityEngine.Random;
 public class RouteBuilder : MonoBehaviour
 {
     [SerializeField] private RoadPattern[] _roadPatterns;
-    private Vector2 _pointToBuilde;
+    
+    private Vector2 _pointToBuild;
+    private GameObject[] _playerMovers;
+    private float _lessDistanceToBuilde;
 
     private void Start()
     {
-        _pointToBuilde = Vector3.zero;
+        _playerMovers = GameObject.FindGameObjectsWithTag("Player");//погано, аде хз як краще
+        _pointToBuild = Vector3.zero;
+        BuildNextRoad();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        Debug.Log(CheckIfPlayerNear());
+        if (CheckIfPlayerNear())
         {
             BuildNextRoad();
         }
     }
 
-    public void BuildNextRoad()
+    private void BuildNextRoad()
     {
         var roadPattern = GetRandomRoadPattern();
-        Instantiate(roadPattern.roads, _pointToBuilde, Quaternion.identity);
-        _pointToBuilde += roadPattern.GetVectorLength();
+        Instantiate(roadPattern.roads, _pointToBuild, Quaternion.identity);
+        
+        _lessDistanceToBuilde = roadPattern.GetVectorLength().magnitude;
+        
+        _pointToBuild += roadPattern.GetVectorLength();
     }
 
-    private RoadPattern GetRandomRoadPattern() => _roadPatterns[Random.Range(0, _roadPatterns.Length-1)];
+    private bool CheckIfPlayerNear()
+    {
+        foreach (var gameObject in _playerMovers)
+        {
+            if (Vector2.Distance(gameObject.transform.position, _pointToBuild) < _lessDistanceToBuilde)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
+
+    private RoadPattern GetRandomRoadPattern() => _roadPatterns[Random.Range(0, _roadPatterns.Length)];
 }
