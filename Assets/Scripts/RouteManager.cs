@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class RouteManager : MonoBehaviour
 {
+    private const float timeToDestroy = 7;
     public static RouteManager instance { get; private set;} 
     
     [SerializeField] private GameObject[] _routes;
@@ -24,17 +25,17 @@ public class RouteManager : MonoBehaviour
         Instantiate(GetRandomRoute(), startPoint, Quaternion.identity);
     }
 
-    public void DeletePreviousRoute(PathCreator[] previosRoute)
+    public void DeletePreviousRoute(GameObject[] previosRoute)
     {
-        /*StartCoroutine(UnActivateRoute(previosRoute));*/ //не правильна передача масиву усіх доріг
+        StartCoroutine(UnActivateRoute(previosRoute)); 
     }
 
-    private IEnumerator UnActivateRoute(PathCreator[] routes)
+    private IEnumerator UnActivateRoute(GameObject[] routes)
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(timeToDestroy);
         foreach (var route in routes)
         {
-            route.gameObject.SetActive(false);
+            route.SetActive(false);
         }
         
     }

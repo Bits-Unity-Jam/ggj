@@ -8,13 +8,13 @@ public class Transition : MonoBehaviour
 {
     [SerializeField] private List<Route> _routeList;
     
-    private PathCreator[] _priviousRoutes;
+    private GameObject[] _priviousRoutes;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent(out PlayerMover playerMover))
         {
-            GetPreviousRoute(playerMover);
+            /*GetPreviousRoute(playerMover);*/
             var currentPath=GiveNextRoutes(playerMover,_routeList);
             
             InformManager(currentPath); //тре налагодити предачу всіх шляхів
@@ -28,10 +28,10 @@ public class Transition : MonoBehaviour
         var endCurrentRoute = currentPath.path.GetPoint(currentPath.path.NumPoints - 1);
         RouteManager.instance.GenerateNextRoute(endCurrentRoute);
             
-        RouteManager.instance.DeletePreviousRoute(_priviousRoutes);
+        /*RouteManager.instance.DeletePreviousRoute(_priviousRoutes);*/
     }
 
-    private void GetPreviousRoute(PlayerMover playerMover) => _priviousRoutes = playerMover.allAvailableleRoute;
+    /*private void GetPreviousRoute(PlayerMover playerMover) => _priviousRoutes = playerMover.allAvailableleRoute;*/
 
     private PathCreator GiveNextRoutes(PlayerMover playerMover,List<Route> routes)
     {

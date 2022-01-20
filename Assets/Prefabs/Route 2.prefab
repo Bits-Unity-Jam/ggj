@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2217291338058159690}
   m_Layer: 0
-  m_Name: Route numerous
+  m_Name: Route 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

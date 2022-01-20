@@ -15,8 +15,10 @@ public class PlayerMover : MonoBehaviour
     private float _distanceTravelled;
 
     public Directions currentDirection { get; set; }
-    public PathCreator[] allAvailableleRoute { get; private set; }
+    /*public GameObject[] allAvailableleRoute { get; private set; }*/
+
     
+
     private void Update()
     {
         MoveByRout();
