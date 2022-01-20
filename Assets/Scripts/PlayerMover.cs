@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using PathCreation;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class PlayerMover : MonoBehaviour
 { 
@@ -12,8 +14,8 @@ public class PlayerMover : MonoBehaviour
     
     private float _distanceTravelled;
 
-    public Directions directions { get; set; }
-    public PathCreator currentPathCreator => _currentPathCreator;
+    public Directions currentDirection { get; set; }
+    public PathCreator[] allAvailableleRoute { get; private set; }
     
     private void Update()
     {
@@ -34,7 +36,20 @@ public class PlayerMover : MonoBehaviour
         _distanceTravelled = 0;
     }
 
-    
+    public PathCreator ChooseRoute(List<Route> routes) //шукає дорогу яка співпадає з напрямком руху гравця, якщо нема то та яка прямо
+    {
+        Route routeStruct;
+        if (routes.Where(i=>i.directions==currentDirection).Count()!=0)
+        {
+            routeStruct = routes.First(i => i.directions == currentDirection);
+        }
+        else
+        {
+            routeStruct = routes[Random.Range(0,routes.Count)];
+        }
+        //allAvailableleRoute[0] = routeStruct.route.GetComponent<PathCreator>();//тре поміняти
+        return routeStruct.route.GetComponent<PathCreator>();
+    }
 }
 public enum Directions
 {

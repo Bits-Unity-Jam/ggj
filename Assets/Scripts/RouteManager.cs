@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PathCreation;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -23,15 +24,19 @@ public class RouteManager : MonoBehaviour
         Instantiate(GetRandomRoute(), startPoint, Quaternion.identity);
     }
 
-    public void DeletePreviousRoute(GameObject previosRoute)//доробити
+    public void DeletePreviousRoute(PathCreator[] previosRoute)
     {
-        StartCoroutine(UnActivateRoute(previosRoute));
+        /*StartCoroutine(UnActivateRoute(previosRoute));*/ //не правильна передача масиву усіх доріг
     }
 
-    private IEnumerator UnActivateRoute(GameObject route)
+    private IEnumerator UnActivateRoute(PathCreator[] routes)
     {
         yield return new WaitForSeconds(5);
-        route.SetActive(false);
+        foreach (var route in routes)
+        {
+            route.gameObject.SetActive(false);
+        }
+        
     }
     private GameObject GetRandomRoute() => _routes[Random.Range(0, _routes.Length)];
     

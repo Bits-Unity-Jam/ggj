@@ -17,15 +17,15 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            _playerMover.directions = Directions.up;
+            _playerMover.currentDirection = Directions.up;
         }
         else if(Input.GetKey(KeyCode.S))
         {
-            _playerMover.directions = Directions.down;
+            _playerMover.currentDirection = Directions.down;
         }
         else
         {
-            _playerMover.directions = Directions.forward;
+            _playerMover.currentDirection = Directions.forward;
         }
     }
 }
