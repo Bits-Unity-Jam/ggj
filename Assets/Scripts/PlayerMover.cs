@@ -11,12 +11,19 @@ public class PlayerMover : MonoBehaviour
 { 
     [SerializeField] private PathCreator _currentPathCreator;
     [SerializeField] private float _speed;
+
+    private Rigidbody2D _playerRb;
     
     private float _distanceTravelled;
 
     public Directions currentDirection { get; set; }
     public PathCreator[] allAvailableleRoute { get; private set; }
-    
+
+    private void Start()
+    {
+        _playerRb = GetComponent<Rigidbody2D>();
+    }
+
     private void Update()
     {
         MoveByRout();
@@ -26,7 +33,8 @@ public class PlayerMover : MonoBehaviour
     private void MoveByRout()
     {
         _distanceTravelled += _speed * Time.deltaTime;
-        transform.position = _currentPathCreator.path.GetPointAtDistance(_distanceTravelled);
+        //transform.position = _currentPathCreator.path.GetPointAtDistance(_distanceTravelled);
+        _playerRb.MovePosition(_currentPathCreator.path.GetPointAtDistance(_distanceTravelled));
         /*transform.rotation = _pathCreator.path.GetRotationAtDistance(_distanceTravelled);*/
     }
 
