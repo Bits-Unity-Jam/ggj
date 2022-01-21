@@ -7,6 +7,8 @@ using PathCreation;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
+
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMover : MonoBehaviour
 { 
     [SerializeField] private TypeControlle _typeControlle;
@@ -15,10 +17,15 @@ public class PlayerMover : MonoBehaviour
     private PathCreator _currentPathCreator;
     private float _distanceTravelled;
     private bool _gameStart=false;
+    private Rigidbody2D _rigidbody2D;
     
     public Directions currentDirection { get; set; }
     public TypeControlle typeControlle => _typeControlle;
 
+    private void Awake()
+    {
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+    }
     private void OnEnable()
     {
         GameManager.instance.GameStart += OnGameStart;
@@ -30,8 +37,9 @@ public class PlayerMover : MonoBehaviour
         GameManager.instance.GameStart -= OnGameStart;
         GameManager.instance.GameEnd -= OnGameEnd;
     }
+    
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(_currentPathCreator!=null && _gameStart)
             MoveByRout();
@@ -41,7 +49,8 @@ public class PlayerMover : MonoBehaviour
     private void MoveByRout()
     {
         _distanceTravelled += _speed * Time.deltaTime;
-        transform.position = _currentPathCreator.path.GetPointAtDistance(_distanceTravelled,EndOfPathInstruction.Stop);
+        /*_rigidbody2D.MovePosition(_currentPathCreator.path.GetPointAtDistance(_distanceTravelled,EndOfPathInstruction.Stop));*/
+        transform.position = _currentPathCreator.path.GetPointAtDistance(_distanceTravelled, EndOfPathInstruction.Stop);
         /*transform.rotation = _pathCreator.path.GetRotationAtDistance(_distanceTravelled);*/
     }
 
@@ -73,6 +82,7 @@ public class PlayerMover : MonoBehaviour
     private void OnGameEnd()
     {
         _gameStart = false;
+        Debug.Log("stop Name:"+this.gameObject.name);
     }
 
     private void  ResetToSart()
