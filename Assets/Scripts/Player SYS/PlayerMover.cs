@@ -14,14 +14,27 @@ public class PlayerMover : MonoBehaviour
 
     private PathCreator _currentPathCreator;
     private float _distanceTravelled;
+    private bool _gameStart=false;
     
     public Directions currentDirection { get; set; }
     public TypeControlle typeControlle => _typeControlle;
-    
+
+    private void OnEnable()
+    {
+        GameManager.instance.GameStart += OnGameStart;
+        GameManager.instance.GameEnd += OnGameEnd;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.instance.GameStart -= OnGameStart;
+        GameManager.instance.GameEnd -= OnGameEnd;
+    }
 
     private void Update()
     {
-        if(_currentPathCreator!=null)MoveByRout();
+        if(_currentPathCreator!=null && _gameStart)
+            MoveByRout();
     }
     
 
@@ -50,5 +63,20 @@ public class PlayerMover : MonoBehaviour
             routeStruct = routes[Random.Range(0,routes.Count)];
         }
         return routeStruct.route.GetComponent<PathCreator>();
+    }
+
+    private void OnGameStart()
+    {
+        ResetToSart();
+        _gameStart = true;
+    }
+    private void OnGameEnd()
+    {
+        _gameStart = false;
+    }
+
+    private void  ResetToSart()
+    {
+        //перенеос на старт
     }
 }

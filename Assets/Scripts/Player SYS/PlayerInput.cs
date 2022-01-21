@@ -23,7 +23,6 @@ public class PlayerInput : MonoBehaviour
 
     private void SetPlayerMoverDiraction()
     {
-
         if (Input.GetKey(_keyCodeUp))
         {
             _playerMover.currentDirection = Directions.up;
