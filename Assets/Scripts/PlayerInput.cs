@@ -7,10 +7,13 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     private PlayerMover _playerMover;
+    private KeyCode _keyCodeUp;
+    private KeyCode _keyCodeDown;
 
     private void Start()
     {
         _playerMover = GetComponent<PlayerMover>();
+        SetBind();
     }
 
     void Update()
@@ -20,11 +23,12 @@ public class PlayerInput : MonoBehaviour
 
     private void SetPlayerMoverDiraction()
     {
-        if (Input.GetKey(KeyCode.W))
+
+        if (Input.GetKey(_keyCodeUp))
         {
             _playerMover.currentDirection = Directions.up;
         }
-        else if(Input.GetKey(KeyCode.S))
+        else if(Input.GetKey(_keyCodeDown))
         {
             _playerMover.currentDirection = Directions.down;
         }
@@ -33,4 +37,24 @@ public class PlayerInput : MonoBehaviour
             _playerMover.currentDirection = Directions.forward;
         }
     }
+
+    private void SetBind()
+    {
+        if (_playerMover.typeControlle==TypeControlle.FirstPlayer)
+        {
+            _keyCodeUp = KeyCode.W;
+            _keyCodeDown = KeyCode.S;
+        }
+        else if(_playerMover.typeControlle==TypeControlle.SecondPlayer)
+        {
+            _keyCodeUp = KeyCode.I;
+            _keyCodeDown = KeyCode.K;
+        }
+    }
+}
+
+public enum TypeControlle
+{
+    FirstPlayer,
+    SecondPlayer
 }

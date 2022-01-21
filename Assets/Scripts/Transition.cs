@@ -12,7 +12,7 @@ public class Transition : MonoBehaviour
         {
             GiveNextRoutes(playerMover,_routeList);
 
-            Debug.Log(playerMover.currentDirection);
+            Debug.Log($"{playerMover.typeControlle} == "+playerMover.currentDirection);
         }
     }
     

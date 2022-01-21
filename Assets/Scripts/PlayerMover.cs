@@ -9,12 +9,14 @@ using Random = UnityEngine.Random;
 
 public class PlayerMover : MonoBehaviour
 { 
-    [SerializeField] private PathCreator _currentPathCreator;
+    [SerializeField] private TypeControlle _typeControlle;
     [SerializeField] private float _speed;
 
+    private PathCreator _currentPathCreator;
     private float _distanceTravelled;
-
+    
     public Directions currentDirection { get; set; }
+    public TypeControlle typeControlle => _typeControlle;
     
 
     private void Update()

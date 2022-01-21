@@ -20,7 +20,6 @@ public class RouteBuilder : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(CheckIfPlayerNear());
         if (CheckIfPlayerNear())
         {
             BuildNextRoad();
