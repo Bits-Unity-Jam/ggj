@@ -28,7 +28,7 @@ public class PlayerMover : MonoBehaviour
     private void MoveByRout()
     {
         _distanceTravelled += _speed * Time.deltaTime;
-        transform.position = _currentPathCreator.path.GetPointAtDistance(_distanceTravelled);
+        transform.position = _currentPathCreator.path.GetPointAtDistance(_distanceTravelled,EndOfPathInstruction.Stop);
         /*transform.rotation = _pathCreator.path.GetRotationAtDistance(_distanceTravelled);*/
     }
 
