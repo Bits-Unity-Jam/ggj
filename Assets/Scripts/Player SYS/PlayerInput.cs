@@ -52,9 +52,3 @@ public class PlayerInput : MonoBehaviour
         }
     }
 }
-
-public enum TypeControlle
-{
-    FirstPlayer,
-    SecondPlayer
-}
