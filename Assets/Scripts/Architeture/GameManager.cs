@@ -9,12 +9,27 @@ public class GameManager : MonoBehaviour
 
     public event Action GameStart,GameEnd,PauseGame,ContinueGame;
     
+    public bool IsAwaked=false;
+    public bool IsEnabled=false;
+    public bool IsStarted=false;
+
     private void Awake()
     {
         if(instance!=null)
             Destroy(this.gameObject);
-
         instance = this;
+        
+        IsAwaked = true;
+    }
+
+    private void OnEnable()
+    {
+        IsEnabled = true;
+    }
+
+    private void Start()
+    {
+        IsStarted = true;
     }
 
     private void Update()

@@ -5,7 +5,7 @@ using UnityEngine;
 using TMPro;
 
 
-public class Timer : MonoBehaviour
+public class Timer : GameUI
 {
     [SerializeField] private float PauseY=-16;
     [SerializeField] private float ContinueY=-740;
@@ -17,20 +17,23 @@ public class Timer : MonoBehaviour
     private float _timer;
     private bool _isGameStared=false;
 
-    private void Start()
+    private new void Awake()
     {
-        GameManager.instance.PauseGame += ToPause;
-        GameManager.instance.ContinueGame += ToContinue;
-        GameManager.instance.GameStart += TornOnTimer;
-        
+        base.Awake();
         _timeText = GetComponent<TextMeshProUGUI>();
-        _timeText.text = _timer.ToString("0.0") + " sec";
     }
 
-    private void OnDisable()
+    private new void OnEnable()
     {
-        GameManager.instance.PauseGame -= ToPause;
-        GameManager.instance.ContinueGame -= ToContinue;
+        base.OnEnable();
+        StartCoroutine(Subscribing());
+    }
+
+    private new void  OnDisable()
+    {
+        base.OnDisable();
+        GameManager.instance.GameStart -= TurnOnTimer;
+        GameManager.instance.GameEnd += TurnOffTimer;
     }
 
     private void Update()
@@ -45,22 +48,39 @@ public class Timer : MonoBehaviour
         _timeText.text = _timer.ToString("0.0") + " sec";
     }
 
-    public void ToPause()
+    protected override void OnPause()
     {
         LeanTween.moveY(gameObject.GetComponent<RectTransform>(), PauseY, 0.1f);
         _timeText.fontSize = PauseSize;
-        _isGameStared = false;
+        TurnOffTimer();
     }
 
-    public void ToContinue()
+    protected override void OnContinue()
     {
         LeanTween.moveY(gameObject.GetComponent<RectTransform>(), ContinueY, 0.1f);
         _timeText.fontSize = ContinueSize;
+        TurnOnTimer();
+    }
+
+    private void TurnOnTimer()
+    {
         _isGameStared = true;
     }
 
-    private void TornOnTimer()
+    private void TurnOffTimer()
     {
-        _isGameStared = true;
+        _isGameStared = false;
+    }
+    
+    private  new IEnumerator Subscribing()
+    {
+        yield return new WaitUntil(() => _gameManager.IsEnabled && _gameManager.IsAwaked && _gameManager.IsStarted);
+        DoTimerSubscribtion();
+        
+        void DoTimerSubscribtion()
+        {
+            GameManager.instance.GameStart += TurnOnTimer;
+            GameManager.instance.GameEnd += TurnOffTimer;
+        }
     }
 }

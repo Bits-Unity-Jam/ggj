@@ -1,28 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class QuiteButton : MonoBehaviour
+public class QuiteButton : GameUI
 {
     [SerializeField] private float PauseY;
     [SerializeField] private float ContinueY;
-    private void Start()
-    {
-        GameManager.instance.PauseGame += ToPause;
-        GameManager.instance.ContinueGame += ToContinue;
-    }
 
-    private void OnDisable()
+    private Button _quite;
+
+    private new void Awake()
     {
-        GameManager.instance.PauseGame -= ToPause;
-        GameManager.instance.ContinueGame -= ToContinue;
+        base.Awake();
+        _quite = GetComponent<Button>();
     }
-    public void ToPause()
+    private new void OnEnable()
+    {
+        base.OnEnable();
+        /*_quite.onClick.AddListener();*/ //після створення івенту виходу до меню
+    }
+    protected override void OnPause()
     {
         LeanTween.moveY(gameObject.GetComponent<RectTransform>(), PauseY, 0.1f);
     }
 
-    public  void ToContinue()
+    protected override void OnContinue()
     {
         LeanTween.moveY(gameObject.GetComponent<RectTransform>(), ContinueY, 0.1f);
     }

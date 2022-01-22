@@ -759,7 +759,7 @@ GameObject:
   - component: {fileID: 612524090}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -776,6 +776,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a2663d31caf2d468714ab3ee133a17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsAwaked: 0
+  IsEnabled: 0
+  IsStarted: 0
 --- !u!4 &612524091
 Transform:
   m_ObjectHideFlags: 0
@@ -1965,7 +1968,7 @@ GameObject:
   - component: {fileID: 1818687122}
   - component: {fileID: 1818687121}
   m_Layer: 5
-  m_Name: PauseMenuPamel
+  m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

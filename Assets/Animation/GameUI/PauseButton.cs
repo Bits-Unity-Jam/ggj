@@ -4,34 +4,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseButton : MonoBehaviour
+public class PauseButton : GameUI
 {
     private Button _pause;
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         _pause = GetComponent<Button>();
     }
 
-    private void Start()
+    private new void OnEnable()
     {
-        _pause.onClick.AddListener(GameManager.instance.ToPauseGame);
-        _pause.onClick.AddListener(ToPause);
-        
-        GameManager.instance.ContinueGame += ToContinue;
+        base.OnEnable();
+        StartCoroutine(Subscribing());
     }
-
-    private void OnDisable()
-    {
-        GameManager.instance.ContinueGame -= ToContinue;
-    }
-    public void ToPause()
+    
+    protected override void OnPause()
     {
         _pause.interactable = false;
     }
 
-    public  void ToContinue()
+    protected override void OnContinue()
     {
         _pause.interactable = true;
+    }
+
+    private  new IEnumerator Subscribing()
+    {
+        yield return new WaitUntil(() => _gameManager.IsEnabled && _gameManager.IsAwaked && _gameManager.IsStarted);
+        DoPauseSubscribtion();
+        
+        void DoPauseSubscribtion()
+        {
+            _pause.onClick.AddListener(GameManager.instance.ToPauseGame);
+        }
     }
 }

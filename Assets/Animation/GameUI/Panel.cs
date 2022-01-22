@@ -3,39 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Panel : MonoBehaviour
+public class Panel : GameUI
 {
-    public RectTransform rt;
+    [SerializeField] RectTransform rt;
     [SerializeField]private  float pausedY = 1.436472f;
     [SerializeField]private  float continuedY = 897.7964f;
     
-    private const float pausedX = 3.87f;
-    private const float continuedX = 1;
-
-
-    private void Start()
+    private const float PausedX = 3.87f;
+    private const float ContinuedX = 1;
+    
+    protected override void OnPause()
     {
-        GameManager.instance.PauseGame += ToPause;
-        GameManager.instance.ContinueGame += ToContinue;
+        transform.LeanScaleX(PausedX, 0.08f);
+        StartCoroutine(ToDeleyMyLerping(0.09f));
     }
 
-    private void OnDisable()
-    {
-        GameManager.instance.PauseGame -= ToPause;
-        GameManager.instance.ContinueGame -= ToContinue;
-    }
-
-    public void ToPause()
-    {
-        transform.LeanScaleX(pausedX, 0.08f);
-        StartCoroutine(ToDeleyMyLerping(0.08f));
-
-    }
-
-    public  void ToContinue() //легасі:)
+    protected override void OnContinue() 
     {
         StartCoroutine(Lerping(rt.SetTopY, pausedY, continuedY, 10));
-        transform.LeanScaleX(continuedX, 0.1f);
+        transform.LeanScaleX(ContinuedX, 0.1f);
     }
 
     private IEnumerator Lerping(Action<float> method,float firstValue, float endValue,float speed)
@@ -49,15 +35,13 @@ public class Panel : MonoBehaviour
             yield return null;
         }
         
-    }
+    }//легасі :)
 
     private IEnumerator ToDeleyMyLerping(float time)
     {
         yield return new WaitForSeconds(time);
         StartCoroutine(Lerping(rt.SetTopY, continuedY, pausedY,0.4f));
     }
-    
-
 }
 
 
