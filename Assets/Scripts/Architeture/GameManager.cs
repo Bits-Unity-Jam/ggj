@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
 
-    public event Action GameStart,GameEnd;
+    public event Action GameStart,GameEnd,PauseGame,ContinueGame;
     
     private void Awake()
     {
@@ -32,6 +32,16 @@ public class GameManager : MonoBehaviour
     
     public void ToEndGame()
     {
-        GameEnd.Invoke();
+        GameEnd?.Invoke();
     }
+    public void ToPauseGame()
+    {
+        PauseGame?.Invoke();
+    }
+    
+    public void ToContinueGame()
+    {
+        ContinueGame?.Invoke();
+    }
+
 }

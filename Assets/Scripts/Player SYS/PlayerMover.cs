@@ -29,17 +29,21 @@ public class PlayerMover : MonoBehaviour
     private void OnEnable()
     {
         GameManager.instance.GameStart += OnGameStart;
-        GameManager.instance.GameEnd += OnGameEnd;
+        GameManager.instance.GameEnd += OnGameEndOrPause;
+        GameManager.instance.PauseGame += OnGameEndOrPause;
+        GameManager.instance.ContinueGame += OnGameContinued;
     }
 
     private void OnDisable()
     {
         GameManager.instance.GameStart -= OnGameStart;
-        GameManager.instance.GameEnd -= OnGameEnd;
+        GameManager.instance.GameEnd -= OnGameEndOrPause;
+        GameManager.instance.PauseGame -= OnGameEndOrPause;
+        GameManager.instance.ContinueGame -= OnGameContinued;
     }
     
 
-    private void FixedUpdate()
+    private void Update()
     {
         if(_currentPathCreator!=null && _gameStart)
             MoveByRout();
@@ -79,14 +83,18 @@ public class PlayerMover : MonoBehaviour
         ResetToSart();
         _gameStart = true;
     }
-    private void OnGameEnd()
+    private void OnGameEndOrPause()
     {
         _gameStart = false;
-        Debug.Log("stop Name:"+this.gameObject.name);
+    }
+
+    private void OnGameContinued()
+    {
+        _gameStart = true;
     }
 
     private void  ResetToSart()
     {
-        //перенеос на старт
+        //перенос на старт
     }
 }
