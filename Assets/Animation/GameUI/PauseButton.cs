@@ -30,9 +30,9 @@ public class PauseButton : GameUI
         _pause.interactable = true;
     }
 
-    private  new IEnumerator Subscribing()
+    private  IEnumerator Subscribing()
     {
-        yield return new WaitUntil(() => _gameManager.IsEnabled && _gameManager.IsAwaked && _gameManager.IsStarted);
+        yield return new WaitUntil(() => GameManager.IsEnabled && GameManager.IsAwaked && GameManager.IsStarted);
         DoPauseSubscribtion();
         
         void DoPauseSubscribtion()

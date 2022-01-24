@@ -5,11 +5,11 @@ using UnityEngine;
 
 public abstract class GameUI : MonoBehaviour
 {
-    protected GameManager _gameManager;
+    protected GameManager GameManager;
 
     protected void Awake()
     {
-        _gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        GameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
     protected void OnEnable()
@@ -23,9 +23,9 @@ public abstract class GameUI : MonoBehaviour
         GameManager.instance.ContinueGame -= OnContinue;
     }
 
-    protected virtual IEnumerator Subscribing()
+    private  IEnumerator Subscribing()
     {
-        yield return new WaitUntil(() => _gameManager.IsEnabled && _gameManager.IsAwaked && _gameManager.IsStarted);
+        yield return new WaitUntil(() => GameManager.IsEnabled && GameManager.IsAwaked && GameManager.IsStarted);
 
         DoBaseSubscribtion();
 

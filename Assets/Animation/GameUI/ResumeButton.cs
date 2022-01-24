@@ -35,12 +35,12 @@ public class ResumeButton : GameUI
         transform.LeanScale(Vector3.zero, 0.1f);
     }
 
-    private  new IEnumerator Subscribing()
+    private  IEnumerator Subscribing()
     {
-        yield return new WaitUntil(() => _gameManager.IsEnabled && _gameManager.IsAwaked && _gameManager.IsStarted);
-        DoresumeSubscribtion();
+        yield return new WaitUntil(() => GameManager.IsEnabled && GameManager.IsAwaked && GameManager.IsStarted);
+        DoResumeSubscribtion();
         
-        void DoresumeSubscribtion()
+        void DoResumeSubscribtion()
         {
             _continue.onClick.AddListener(GameManager.instance.ToContinueGame);
         }

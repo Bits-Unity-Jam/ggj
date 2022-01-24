@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMover))]
 public class PlayerInput : MonoBehaviour
 {
+    [SerializeField] private TypeControlle _typeControlle;
+    
     private PlayerMover _playerMover;
     private KeyCode _keyCodeUp;
     private KeyCode _keyCodeDown;
@@ -39,12 +41,12 @@ public class PlayerInput : MonoBehaviour
 
     private void SetBind()
     {
-        if (_playerMover.typeControlle==TypeControlle.FirstPlayer)
+        if (_typeControlle==TypeControlle.FirstPlayer)
         {
             _keyCodeUp = KeyCode.W;
             _keyCodeDown = KeyCode.S;
         }
-        else if(_playerMover.typeControlle==TypeControlle.SecondPlayer)
+        else if(_typeControlle==TypeControlle.SecondPlayer)
         {
             _keyCodeUp = KeyCode.I;
             _keyCodeDown = KeyCode.K;

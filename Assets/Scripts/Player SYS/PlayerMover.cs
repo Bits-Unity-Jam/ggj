@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMover : MonoBehaviour
 { 
-    [SerializeField] private TypeControlle _typeControlle;
+    /*[SerializeField] private TypeControlle _typeControlle;*/
     [SerializeField] private float _speed;
 
     private PathCreator _currentPathCreator;
@@ -20,7 +20,7 @@ public class PlayerMover : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     
     public Directions currentDirection { get; set; }
-    public TypeControlle typeControlle => _typeControlle;
+    /*public TypeControlle typeControlle => _typeControlle;*/
 
     private void Awake()
     {
@@ -53,7 +53,6 @@ public class PlayerMover : MonoBehaviour
     private void MoveByRout()
     {
         _distanceTravelled += _speed * Time.deltaTime;
-        /*_rigidbody2D.MovePosition(_currentPathCreator.path.GetPointAtDistance(_distanceTravelled,EndOfPathInstruction.Stop));*/
         transform.position = _currentPathCreator.path.GetPointAtDistance(_distanceTravelled, EndOfPathInstruction.Stop);
         /*transform.rotation = _pathCreator.path.GetRotationAtDistance(_distanceTravelled);*/
     }
