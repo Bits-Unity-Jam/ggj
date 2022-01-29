@@ -15,7 +15,7 @@ public class Timer : GameUI
 
     private TextMeshProUGUI _timeText;
     private float _timer;
-    private bool _isGameStared=false;
+    private bool _isGameStared=true;
 
     private new void Awake()
     {
@@ -70,6 +70,12 @@ public class Timer : GameUI
     private void TurnOffTimer()
     {
         _isGameStared = false;
+        DoGameEndAnimation();
+    }
+
+    private void DoGameEndAnimation()
+    {
+        LeanTween.moveY(gameObject.GetComponent<RectTransform>(), 122, 0.1f);
     }
     
     private  IEnumerator Subscribing()

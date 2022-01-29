@@ -10,6 +10,13 @@ public class Panel : GameUI
     
     private const float PausedX = 3.87f;
     private const float ContinuedX = 1;
+
+
+    private new void OnEnable()
+    {
+        base.OnEnable();
+        StartCoroutine(Subscribing());
+    }
     
     protected override void OnPause()
     {
@@ -23,7 +30,14 @@ public class Panel : GameUI
         transform.LeanScaleX(ContinuedX, 0.1f);
     }
 
-    private IEnumerator Lerping(Action<float> method,float firstValue, float endValue,float speed)
+    private void OnGameEnd()
+    {
+        LeanTween.moveY(gameObject.GetComponent<RectTransform>(), 204.3051f, 0.1f);
+        transform.localScale = new Vector3(1, 2.5f, 1);
+    }
+    
+
+    private IEnumerator Lerping(Action<float> method,float firstValue, float endValue,float speed)//легасі :)
     {
         float t = 0;
         while (t <1+speed) 
@@ -34,15 +48,25 @@ public class Panel : GameUI
             yield return null;
         }
         
-    }//легасі :)
-
+    }
     private IEnumerator ToDeleyMyLerping(float time)
     {
         yield return new WaitForSeconds(time);
         StartCoroutine(Lerping(rt.SetTopY, continuedY, pausedY,0.4f));
     }
+    
+    private  IEnumerator Subscribing()
+    {
+        yield return new WaitUntil(() => GameManager.IsEnabled && GameManager.IsAwaked && GameManager.IsStarted);
+        DoPanelSubscribtion();
+        
+        void DoPanelSubscribtion()
+        {
+            GameManager.instance.GameEnd += OnGameEnd;
+        }
+    }
+   
 }
-
 
 public static class RectTransformExtensions //
 {

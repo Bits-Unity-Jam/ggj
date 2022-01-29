@@ -9,9 +9,9 @@ public class GameManager : MonoBehaviour
 
     public event Action GameStart,GameEnd,PauseGame,ContinueGame;
     
-    public bool IsAwaked=false;
-    public bool IsEnabled=false;
-    public bool IsStarted=false;
+    public static bool IsAwaked=false;
+    public static bool IsEnabled=false;
+    public static bool IsStarted=false;
 
     private void Awake()
     {
@@ -30,15 +30,9 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         IsStarted = true;
+        ToStartGame();
     }
-
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            ToStartGame();
-        }
-    }
+    
 
     public void ToStartGame()
     {

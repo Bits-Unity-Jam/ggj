@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,6 +11,7 @@ public class RouteBuilder : MonoBehaviour
     private Vector2 _pointToBuild;
     private GameObject[] _playerMovers;
     private float _lessDistanceToBuilde;
+
 
     private void Start()
     {
@@ -28,11 +30,10 @@ public class RouteBuilder : MonoBehaviour
 
     private void BuildNextRoad()
     {
-        var roadPattern = GetRandomRoadPattern();
+        var roadPattern = GetRandomRoadPattern(); 
         Instantiate(roadPattern.roads, _pointToBuild, Quaternion.identity,gameObject.transform);
-        
+
         _lessDistanceToBuilde = roadPattern.GetVectorLength().magnitude;
-        
         _pointToBuild += roadPattern.GetVectorLength();
     }
 
@@ -47,7 +48,7 @@ public class RouteBuilder : MonoBehaviour
         }
         return false;
     }
-
+    
 
     private RoadPattern GetRandomRoadPattern() => _roadPatterns[Random.Range(0, _roadPatterns.Length)];
 }
